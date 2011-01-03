@@ -1,0 +1,21 @@
+%h1 Remove Javascript
+
+%p 
+  Are you sure you want to 
+  %strong.warning permanently remove
+  the following javascript?
+
+%table.index
+  %tbody
+    %tr.node.level_1
+      %td
+        = image('javascript', :alt => '')
+        = h model.title
+
+- form_for [:admin, model], 
+  :url => admin_script_url(model),
+  :html => {:method => :delete, 'data-onsubmit_status'=>"Removing javascript&#8230;" } do
+  %p.buttons
+    %input.button{:type=>"submit", :value=>"Delete Javascript"}/
+    = t('or')
+    = link_to t('cancel'), admin_scripts_url

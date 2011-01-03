@@ -14,14 +14,6 @@ module Sheet
         def self.default_page_parts
           PagePart.new(:name => 'body')
         end
-        
-        def self.create_from_upload!(file)
-          @sheet = self.new_with_defaults
-          @sheet.upload = file
-          @sheet.save!
-          @sheet
-        end
-        
       }
     end
     
@@ -58,20 +50,6 @@ module Sheet
       end
     end
         
-    def upload=(file)
-      case
-      when file.blank?
-        self.errors.add(:upload, 'not given. Please upload a file.')
-      when !file.kind_of?(ActionController::UploadedFile)
-        self.errors.add(:upload, 'is an unusable format.')
-      when file.size > 262144 # 256k (that's a HUGE script or stylesheet)
-        self.errors.add(:upload, 'file size is larger than 256kB. Please upload a smaller file.')
-      else
-        self.slug = file.original_filename.to_slug().gsub(/-css$/,'.css').gsub(/-js/,'.js')
-        self.part('body').content = file.read
-      end
-    end
-  
     private
   
     def set_title

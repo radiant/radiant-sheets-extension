@@ -1,6 +1,7 @@
 %h1= model.new_record? ? t('new_javascript') : t('edit_javascript')
 - form_for [:admin, model], 
-  :url => (model.new_record? ? admin_scripts_url : admin_script_url(model)) do |f|
+  :url => (model.new_record? ? admin_scripts_url : admin_script_url(model)),
+  :html => {"data-onsubmit_status"=>"Saving changes&#8230;"} do |f|
   %p.title
     = label :sheet_page, :slug, 'Slug'
     = f.text_field :slug, :class => 'textbox', :maxlength => 255, :id => 'sheet_page_slug'

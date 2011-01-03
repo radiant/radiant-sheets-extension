@@ -17,8 +17,8 @@ class SheetsExtension < Radiant::Extension
     SassFilter
     
     tab 'Design' do
-      add_item "Stylesheets", "/admin/styles"
-      add_item "Javascripts", "/admin/scripts"
+      add_item "Stylesheets", "/admin/styles", :before => "Snippets"
+      add_item "Javascripts", "/admin/scripts", :before => "Snippets"
     end
     
     ApplicationHelper.module_eval do

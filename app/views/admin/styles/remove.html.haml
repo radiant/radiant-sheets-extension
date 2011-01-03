@@ -1,0 +1,21 @@
+%h1 Remove Stylesheet
+
+%p 
+  Are you sure you want to 
+  %strong.warning permanently remove
+  the following stylesheet?
+
+%table.index
+  %tbody
+    %tr.node.level_1
+      %td
+        = image('stylesheet', :alt => '')
+        = h model.title
+
+- form_for [:admin, model], 
+  :url => admin_style_url(model),
+  :html => {:method => :delete, 'data-onsubmit_status'=>"Removing stylesheet&#8230;" } do
+  %p.buttons
+    %input.button{:type=>"submit", :value=>"Delete Stylesheet"}/
+    = t('or')
+    = link_to t('cancel'), admin_styles_url

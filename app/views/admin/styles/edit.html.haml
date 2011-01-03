@@ -1,6 +1,7 @@
 %h1= model.new_record? ? t('new_stylesheet') : t('edit_stylesheet')
 - form_for [:admin, model], 
-  :url => (model.new_record? ? admin_styles_url() : admin_style_url(model)) do |f|
+  :url => (model.new_record? ? admin_styles_url() : admin_style_url(model)),
+  :html => {"data-onsubmit_status"=>"Saving changes&#8230;"} do |f|
   %p.title
     = label :sheet_page, :slug, 'Slug'
     = f.text_field :slug, :class => 'textbox', :maxlength => 255, :id => "sheet_page_slug"

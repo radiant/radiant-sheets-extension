@@ -1,27 +1,22 @@
-= render 'admin/sheets/upload_script'
 .outset
   %table.index
     %thead
       %tr
-        %th Javascript
-        %th Modify
+        %th.name Javascript
+        %th.actions{:style=>"width:8em;"} Modify
     %tbody
-      - models.each do |javascript|
+      - unless models.blank?
+        - models.each do |javascript|
+          %tr
+            %td.name
+              = image('javascript') 
+              = link_to javascript.title, edit_admin_script_path(javascript)
+            %td.actions= link_to image('minus') + ' ' + t('remove'), remove_admin_script_url(javascript), :class => "action"
+      - else
         %tr
-          %td.name
-            = image('javascript') 
-            = link_to javascript.title, edit_admin_script_path(javascript)
-          %td.actions= link_to(image('minus') + ' ' + t('remove'), admin_script_url(javascript), :class => "action", :method => :delete, :confirm => "Is it OK to delete #{javascript.slug}?")
+          %td.empty{:colspan => 2} No javascripts
 
 #actions
   = pagination_for(models)
   %ul
     %li= link_to image('plus') + " " + t("new_javascript"), new_admin_script_path
-    %li
-      = link_to t("upload"), '#uploader', :class => 'replace'
-      #uploader
-        - form_for :upload, :url => upload_admin_scripts_path, :html => { :class => 'button_form', :multipart => true } do |f|
-          %span
-            = f.label :upload
-            = f.file_field :upload 
-            = f.submit 'Create Javascript'
