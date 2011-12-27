@@ -1,0 +1,17 @@
+---
+de: 
+  create_javascript: Javascript anlegen
+  create_stylesheet: CSS anlegen
+  edit_javascript: Javascript bearbeiten
+  edit_stylesheet: CSS bearbeiten
+  new_javascript: Neues Javascript
+  new_stylesheet: Neues CSS
+  path: Pfad
+  sheets: Sheets
+  upload: Hochladen
+  stylesheet_page: CSS
+  javascript_page: Javascript
+  sheets:
+    root_required: "Sie müssen zuerst eine Homepage anlegen, bevor sie ein %{model} erzeugen können."
+  no_styles: 'Keine CSS'
+  no_scripts: 'Keine Javascripts'
