@@ -11,8 +11,7 @@
         - models.each do |stylesheet|
           %tr
             %td.name
-              = image('stylesheet') 
-              = link_to stylesheet.title, edit_admin_style_path(stylesheet)
+              = link_to image('stylesheet') + ' ' + stylesheet.title, edit_admin_style_path(stylesheet)
             %td.filter= stylesheet.part('body').filter.filter_name
             %td.actions= link_to(image('minus') + ' ' + t('remove'), admin_style_url(stylesheet), :class => "action", :method => :delete, :confirm => "Is it OK to delete #{stylesheet.slug}?")
       - else
