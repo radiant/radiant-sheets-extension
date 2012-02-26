@@ -1,11 +1,6 @@
-begin
-  require 'coffee_script'
-  class CoffeeFilter < TextFilter
-    def filter(text)
-      CoffeeScript.compile text
-    end
+require 'coffee_script'
+class CoffeeFilter < TextFilter
+  def filter(text)
+    CoffeeScript.compile text
   end
-rescue ExecJS::RuntimeUnavailable
-  Rails.logger.warn "There is no support for CoffeeScript"
-  class CoffeeFilter;end
 end

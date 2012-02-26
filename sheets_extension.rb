@@ -14,7 +14,12 @@ class SheetsExtension < Radiant::Extension
   @@stylesheet_filters ||= []
   @@stylesheet_filters += [SassFilter, ScssFilter]
   @@javascript_filters ||= []
-  @@javascript_filters << CoffeeFilter
+  
+  begin
+    @@javascript_filters << CoffeeFilter
+  rescue ExecJS::RuntimeUnavailable
+    Rails.logger.warn "There is no support for CoffeeScript"
+  end
   
   def activate
     SassFilter
