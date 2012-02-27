@@ -22,9 +22,6 @@ class SheetsExtension < Radiant::Extension
   end
   
   def activate
-    SassFilter
-    ScssFilter
-    CoffeeFilter
     MenuRenderer.exclude 'JavascriptPage', 'StylesheetPage'
     
     tab 'Design' do
