@@ -3,7 +3,7 @@
   %p.title
     = label :sheet_page, :slug, t('slug')
     = f.text_field :slug, :class => 'textbox', :maxlength => 255, :id => "sheet_page_slug"
-    %span.hint= %{Path: #{@root.url}<span id="this_slug">#{model.slug}</span>}
+    %span.hint= %{Path: #{@root.path}<span id="this_slug">#{model.slug}</span>}
   - f.fields_for :parts do |p|
     %p.content
       = p.label :content, t('content')
