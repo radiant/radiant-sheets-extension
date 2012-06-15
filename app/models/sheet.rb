@@ -28,10 +28,16 @@ module Sheet
           PagePart.new(:name => 'body')
         end
         
-        def self.create_from_upload!(file)
-          @sheet = self.new_with_defaults
-          @sheet.upload = file
-          @sheet.save!
+        def self.create_or_update_from_upload!(file)
+          slug = file.original_filename.to_slug().gsub(/-dot-css$/,'.css').gsub(/-js/,'.js')
+          @sheet = StylesheetPage.find_by_slug(slug) || JavascriptPage.find_by_slug(slug)
+          if @sheet.nil?
+            @sheet = self.new_with_defaults
+            @sheet.upload = file
+            @sheet.save!
+          else
+            @sheet.part('body').update_attribute :content, file.read
+          end
           @sheet
         end
         
@@ -65,11 +71,12 @@ module Sheet
         end
       end
     end
+    
     def find_by_url(*args)
       ActiveSupport::Deprecation.warn("`find_by_url' has been deprecated; use `find_by_path' instead.", caller)
       find_by_path(*args)
     end
-        
+    
     def upload=(file)
       case
       when file.blank?
@@ -77,7 +84,7 @@ module Sheet
       when !file.kind_of?(ActionController::UploadedFile)
         self.errors.add(:upload, 'is an unusable format.')
       else
-        self.slug = file.original_filename.to_slug().gsub(/-css$/,'.css').gsub(/-js/,'.js')
+        self.slug = file.original_filename.to_slug().gsub(/-dot-css$/,'.css').gsub(/-js/,'.js')
         self.part('body').content = file.read
       end
     end

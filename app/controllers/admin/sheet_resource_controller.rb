@@ -9,8 +9,14 @@ class Admin::SheetResourceController < Admin::ResourceController
     if params[:upload].blank?  # necessary params are missing
       render :text => '', :status => :bad_request
     else
-      @sheet = model_class.create_from_upload!(params[:upload][:upload])
-      response_for :create
+      @sheet = model_class.create_or_update_from_upload!(params[:upload][:upload])
+      if @sheet.new_record?
+        response_for :create
+      else
+        slug = params[:upload][:upload].original_filename.to_slug().gsub(/-dot-css$/,'.css').gsub(/-js/,'.js')
+        flash[:notice] = "#{slug} was succesfully overwritten."
+        response_for :update
+      end
     end
   end
   
