@@ -55,24 +55,5 @@ class SheetsExtension < Radiant::Extension
       end
       alias_method_chain :render_node, :sheets
     end
-    
-    SiteController.class_eval do
-      def self.sheet_cache_timeout
-        @sheet_cache_timeout ||= 30.days
-      end
-      def self.sheet_cache_timeout=(val)
-        @sheet_cache_timeout = val
-      end
-      
-      def set_cache_control_with_sheets
-        if @page.sheet?
-          expires_in self.class.sheet_cache_timeout, :public => true, :private => false
-        else
-          set_cache_control_without_sheets
-        end
-      end
-      alias_method_chain :set_cache_control, :sheets
-    end
-    
   end
 end
