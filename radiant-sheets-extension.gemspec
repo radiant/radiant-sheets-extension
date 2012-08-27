@@ -22,6 +22,6 @@ Gem::Specification.new do |s|
   # s.executables   = Dir['bin/*'] - ignores
   s.require_paths = ["lib"]
   
-  s.add_dependency 'sass', '~>3.1.12'
+  s.add_dependency 'sass', '~>3.2.1'
   s.add_dependency 'coffee-script', '~>2.2.0'
 end
