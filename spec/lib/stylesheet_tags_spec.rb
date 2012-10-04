@@ -16,7 +16,15 @@ describe "Stylesheet Tags" do
     it { should render(%{<r:stylesheet slug="bogus" />}).with_error("stylesheet bogus not found") }
     it { should render(%{<r:stylesheet slug="site.css" />}).as("p { color: blue; }") }
     it { should render(%{<r:stylesheet slug="site.css" as="url" />}).as("/css/site.css?#{site_css.digest}") }
+    it { 
+      Radiant::Config['sheets.asset_host'] = "http://asset-host.com"
+      should render(%{<r:stylesheet slug="site.css" as="url" />}).as("http://asset-host.com/css/site.css?#{site_css.digest}") 
+    }
     it { should render(%{<r:stylesheet slug="site.css" as="link" />}).as(%{<link rel="stylesheet" type="text/css" href="/css/site.css?#{site_css.digest}" />}) }
+    it { 
+      Radiant::Config['sheets.asset_host'] = "http://asset-host.com"
+      should render(%{<r:stylesheet slug="site.css" as="link" />}).as(%{<link rel="stylesheet" type="text/css" href="http://asset-host.com/css/site.css?#{site_css.digest}" />}) 
+    }
     it { should render(%{<r:stylesheet slug="site.css" as="link" type="special/type" />}).as(%{<link rel="stylesheet" type="special/type" href="/css/site.css?#{site_css.digest}" />}) }
     it { should render(%{<r:stylesheet slug="site.css" as="link" something="custom" />}).as(%{<link rel="stylesheet" type="text/css" href="/css/site.css?#{site_css.digest}" something="custom" />}) }
     it { should render(%{<r:stylesheet slug="site.css" as="link" rel="alternate" />}).as(%{<link rel="alternate" type="text/css" href="/css/site.css?#{site_css.digest}" />}) }
