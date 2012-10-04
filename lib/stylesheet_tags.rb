@@ -50,7 +50,8 @@ The above example will produce the following:
       when 'inline'
         %{<style type="#{mime_type}"#{optional_attributes}>\n/*<![CDATA[*/\n#{stylesheet.render_part('body')}\n/*]]>*/\n</style>}
       when 'link'
-        %{<link rel="#{rel}" type="#{mime_type}" href="#{path}"#{optional_attributes} />}
+        asset_host = (Radiant::Config['sheets.asset_host'] ? Radiant::Config['sheets.asset_host'] : '')
+        %{<link rel="#{rel}" type="#{mime_type}" href="#{asset_host}#{path}"#{optional_attributes} />}
       else
         stylesheet.render_part('body')
       end

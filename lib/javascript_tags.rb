@@ -47,7 +47,8 @@ The above example will produce the following:
       when 'inline'
         %{<script type="#{mime_type}"#{optional_attributes}>\n//<![CDATA[\n#{javascript.render_part('body')}\n//]]>\n</script>}
       when 'link'
-        %{<script type="#{mime_type}" src="#{path}"#{optional_attributes}></script>}
+        asset_host = (Radiant::Config['sheets.asset_host'] ? Radiant::Config['sheets.asset_host'] : '')
+        %{<script type="#{mime_type}" src="#{asset_host}#{path}"#{optional_attributes}></script>}
       else
         javascript.render_part('body')
       end

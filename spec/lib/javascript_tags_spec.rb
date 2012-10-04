@@ -17,6 +17,10 @@ describe "Javascript Tags" do
     it { should render(%{<r:javascript slug="site.js" />}).as('alert("site!");') }
     it { should render(%{<r:javascript slug="site.js" as="url" />}).as("/js/site.js?#{javascript_page.digest}") }
     it { should render(%{<r:javascript slug="site.js" as="link" />}).as(%{<script type="#{javascript_page.headers['Content-Type']}" src="#{javascript_page.path}"></script>}) }
+    it { 
+      Radiant::Config['sheets.asset_host'] = "http://asset-host.com"
+      should render(%{<r:javascript slug="site.js" as="link" />}).as(%{<script type="#{javascript_page.headers['Content-Type']}" src="http://asset-host.com#{javascript_page.path}"></script>}) 
+    }
     it { should render(%{<r:javascript slug="site.js" as="link" type="special/type" />}).as(%{<script type="special/type" src="#{javascript_page.path}"></script>}) }
     it { should render(%{<r:javascript slug="site.js" as="link" something="custom" />}).as(%{<script type="#{javascript_page.headers['Content-Type']}" src="#{javascript_page.path}" something="custom"></script>}) }
     it { should render(%{<r:javascript slug="site.js" as="inline" />}).as(%{<script type="#{javascript_page.headers['Content-Type']}">
