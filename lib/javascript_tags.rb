@@ -41,13 +41,13 @@ The above example will produce the following:
       path = javascript.path
       optional_attributes = tag.attr.except('slug', 'name', 'as', 'type').inject('') { |s, (k, v)| s << %{#{k}="#{v}" } }.strip
       optional_attributes = " #{optional_attributes}" unless optional_attributes.empty?
+      asset_host = (Radiant::Config['sheets.asset_host'] ? Radiant::Config['sheets.asset_host'] : '')
       case tag.attr['as']
       when 'url','path'
-        path
+        asset_host+path
       when 'inline'
         %{<script type="#{mime_type}"#{optional_attributes}>\n//<![CDATA[\n#{javascript.render_part('body')}\n//]]>\n</script>}
       when 'link'
-        asset_host = (Radiant::Config['sheets.asset_host'] ? Radiant::Config['sheets.asset_host'] : '')
         %{<script type="#{mime_type}" src="#{asset_host}#{path}"#{optional_attributes}></script>}
       else
         javascript.render_part('body')

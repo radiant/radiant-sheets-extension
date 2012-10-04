@@ -44,13 +44,13 @@ The above example will produce the following:
       rel = tag.attr.delete('rel') || 'stylesheet'
       optional_attributes = tag.attr.except('slug', 'name', 'as', 'type').inject('') { |s, (k, v)| s << %{#{k}="#{v}" } }.strip
       optional_attributes = " #{optional_attributes}" unless optional_attributes.empty?
+      asset_host = (Radiant::Config['sheets.asset_host'] ? Radiant::Config['sheets.asset_host'] : '')
       case tag.attr['as']
       when 'url','path'
-        path
+        asset_host+path
       when 'inline'
         %{<style type="#{mime_type}"#{optional_attributes}>\n/*<![CDATA[*/\n#{stylesheet.render_part('body')}\n/*]]>*/\n</style>}
       when 'link'
-        asset_host = (Radiant::Config['sheets.asset_host'] ? Radiant::Config['sheets.asset_host'] : '')
         %{<link rel="#{rel}" type="#{mime_type}" href="#{asset_host}#{path}"#{optional_attributes} />}
       else
         stylesheet.render_part('body')
